@@ -1,5 +1,7 @@
 local DATA = {}
 
+TriggerServerEvent('entitydata:get-bulk')
+
 RegisterNetEvent('entitydata:set')
 AddEventHandler ('entitydata:set', function(netId, key, value)
     if not DATA[netId] then
@@ -29,3 +31,11 @@ function GetEntityData(entity, key)
     end
 end
 exports('EntityGetData', GetEntityData)
+
+function SetEntityData(entity, key, value)
+    if key and DoesEntityExist(entity) and NetworkGetEntityIsNetworked(entity) then
+        local netId = NetworkGetNetworkIdFromEntity(entity)
+        TriggerServerEvent('entitydata:set', netId, key, value)
+    end
+end
+exports('EntitySetData', SetEntityData)

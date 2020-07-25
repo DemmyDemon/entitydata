@@ -24,3 +24,28 @@ RegisterNetEvent('entitydata:get-bulk')
 AddEventHandler ('entitydata:get-bulk', function()
     TriggerClientEvent('entitydata:set-bulk', source, DATA)
 end)
+
+function GetNetData(netId, key)
+    if DATA[netId] and key then
+        return DATA[netId][key]
+    end
+end
+exports('EntityGetDataByNetworkId', GetNetData)
+
+function GetEntityData(entity, key)
+    if key and DoesEntityExist(entity) then
+        local netId = NetworkGetNetworkIdFromEntity(entity)
+        if DATA[netId] then
+            return DATA[netId][key]
+        end
+    end
+end
+exports('EntityGetData', GetEntityData)
+
+function SetEntityData(entity, key, value)
+    if key and DoesEntityExist(entity) and NetworkGetEntityIsNetworked(entity) then
+        local netId = NetworkGetNetworkIdFromEntity(entity)
+        TriggerServerEvent('entitydata:set', netId, key, value)
+    end
+end
+exports('EntitySetData', SetEntityData)

@@ -1,10 +1,15 @@
 local resource = GetCurrentResourceName()
+local serverside = IsDuplicityVersion()
+
 if GetCurrentResourceName() ~= 'entitydata' then
     function EntityGetDataByNetworkId(...)
         return exports.entitydata:EntityGetDataByNetworkId(...)
     end
     function EntityGetData(...)
         return exports.entitydata:EntityGetData(...)
+    end
+    function EntitySetData(...)
+        return exports.entitydata:EntitySetData(...)
     end
 end
 
