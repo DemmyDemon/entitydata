@@ -1,5 +1,4 @@
 local resource = GetCurrentResourceName()
-local serverside = IsDuplicityVersion()
 
 if GetCurrentResourceName() ~= 'entitydata' then
     function EntityGetDataByNetworkId(...)
